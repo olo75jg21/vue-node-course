@@ -25,7 +25,7 @@ class ViewManager {
 
     checkStatus() {
         const socket =
-            io(process.env.VUE_APP_SERVER_URL, {
+            io('http://localhost:3000', {
                 reconnection: false,
                 transports: ["websocket",
                     "polling"]

@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         async call() {
-            let responseStream = await fetch(`${process.env.VUE_APP_SERVER_URL}/call`, {
+            let responseStream = await fetch(`http://localhost:3000/call`, {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
