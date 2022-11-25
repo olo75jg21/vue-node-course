@@ -1,0 +1,11 @@
+tasks:
+  - name: Server
+    before: gp env WIDGET_URL=$(gp url 8080) && eval $(gp env -e)
+  - name: Widget
+    before: gp env VUE_APP_SERVER_URL=$(gp url 3000) && eval $(gp env -e)
+# Ports to expose on workspace startup
+ports:
+  - port: 8080
+    onOpen: open-preview
+  - port: 3000
+    visibility: public
