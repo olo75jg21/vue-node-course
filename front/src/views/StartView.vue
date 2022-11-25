@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import ViewManager from '../services/ViewManager.js';
-
 export default {
     data() {
         return {
@@ -24,7 +22,6 @@ export default {
     },
     methods: {
         async call() {
-            ViewManager.checkStatus();
             let responseStream = await fetch(`${process.env.VUE_APP_SERVER_URL}/call`, {
                 method: "POST",
                 headers: {

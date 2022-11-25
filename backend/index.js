@@ -20,7 +20,7 @@ const config = {
     password: ''
 };
 
-dialer.configure(config);
+dialer.configure(null);
 
 // Serwer nasłuchuje na porcie 3000
 const serverInstance = httpServer.listen(3000, function () {
