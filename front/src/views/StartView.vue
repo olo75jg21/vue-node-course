@@ -25,8 +25,12 @@ export default {
 
     methods: {
         async call() {
-            const { data } = await axios.post('call', { number: this.number })
-            this.$router.push({ name: 'ringing', params: { callsId: data.id } })
+            try {
+                const { data } = await axios.post('call', { number: this.number })
+                this.$router.push({ name: 'ringing', params: { callsId: data.id } })
+            } catch (e) {
+                console.log(e);
+            }
         },
     },
 }
