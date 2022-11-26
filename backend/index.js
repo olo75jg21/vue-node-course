@@ -8,7 +8,7 @@ const httpServer = express();
 
 httpServer.use(bodyParser.json());
 httpServer.use(cors());
-httpServer.use(function (req, res, next) {
+httpServer.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
     next();
@@ -23,7 +23,7 @@ const config = {
 dialer.configure(null);
 
 // Serwer nasłuchuje na porcie 3000
-const serverInstance = httpServer.listen(3000, function () {
+const serverInstance = httpServer.listen(3000, () => {
     console.log('Example app listening on port 3000!')
     // adres url możemy wygenerować za pomocą komendy
     // gp url 3000
