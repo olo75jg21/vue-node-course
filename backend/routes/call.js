@@ -1,22 +1,40 @@
-module.exports = (httpServer, dialer, io) => {
-    httpServer.get('/call/:number1/:number2', (req, res) => {
-        try {
-            const number1 = req.params.number1;
-            const number2 = req.params.number2;
-            dialer.call(number1, number2);
-            res.json({ success: true });
-        } catch (e) {
-            console.log(e);
-        }
-    });
+const dialer = require('dialer').Dialer;
+const { Server } = require('socket.io');
+
+module.exports = (httpServer, serverInstance) => {
+    // httpServer.get('/call/:number1/:number2', (req, res) => {
+    //     try {
+    //         const number1 = req.params.number1;
+    //         const number2 = req.params.number2;
+    //         dialer.call(number1, number2);
+    //         res.json({ success: true });
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // });
 
     httpServer.post('/call/', async (req, res) => {
         try {
             const number1 = req.body.number;
             const number2 = '555555555' // tutaj dejemy swój numer
+
+            // setup dialer
+            const config = {
+                url: 'https://uni-call.fcc-online.pl',
+                login: '',
+                password: ''
+            };
+
+            dialer.configure(null);
+
+            const io = new Server(serverInstance);
+
             console.log('Dzwonie', number1, number2)
+
             bridge = await dialer.call(number1, number2);
+
             let oldStatus = null
+
             let interval = setInterval(async () => {
                 let currentStatus = await bridge.getStatus();
                 console.log(currentStatus)
@@ -31,6 +49,7 @@ module.exports = (httpServer, dialer, io) => {
                     currentStatus === "NO ANSWER"
                 ) {
                     console.log('stop')
+                    // io.disconnect()
                     clearInterval(interval)
                 }
             }, 1000)

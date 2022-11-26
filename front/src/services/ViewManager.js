@@ -4,6 +4,7 @@ class ViewManager {
     constructor() {
         this.interval = null;
         this.status = null;
+        this.socket = null;
     }
 
     changeView() {
@@ -15,6 +16,7 @@ class ViewManager {
                 router.push({ name: 'failed' });
                 break;
             case 'ANSWERED':
+                this.socket.disconnect();
                 router.push({ name: 'answered' });
                 break;
             case 'RINGING':
@@ -24,13 +26,13 @@ class ViewManager {
     }
 
     checkStatus() {
-        const socket =
+        this.socket =
             io('http://localhost:3000', {
                 reconnection: false,
                 transports: ["websocket",
                     "polling"]
             });
-        socket.on('status', (status) => {
+        this.socket.on('status', (status) => {
             if (status !== this.status) {
                 this.status = status;
                 this.changeView();
@@ -39,4 +41,5 @@ class ViewManager {
         })
     }
 }
+
 export default new ViewManager()

@@ -15,6 +15,7 @@
 
 <script>
 import axios from 'axios';
+import ViewManager from '../services/ViewManager';
 
 export default {
     data() {
@@ -27,6 +28,7 @@ export default {
         async call() {
             try {
                 const { data } = await axios.post('call', { number: this.number })
+                ViewManager.checkStatus()
                 this.$router.push({ name: 'ringing', params: { callsId: data.id } })
             } catch (e) {
                 console.log(e);
