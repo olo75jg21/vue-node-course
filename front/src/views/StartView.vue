@@ -14,23 +14,19 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
             number: ''
         }
     },
+
     methods: {
         async call() {
-            let responseStream = await fetch(`http://localhost:3000/call`, {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                },
-                body: JSON.stringify({ number: this.number })
-            });
-            let response = await responseStream.json()
-            this.$router.push({ name: 'ringing', params: { callsId: response.id } })
+            const { data } = await axios.post('call', { number: this.number })
+            this.$router.push({ name: 'ringing', params: { callsId: data.id } })
         },
     },
 }
