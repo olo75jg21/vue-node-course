@@ -1,7 +1,6 @@
 const dialer = require('dialer').Dialer;
-const { Server } = require('socket.io');
 
-module.exports = (httpServer, serverInstance) => {
+module.exports = (httpServer, io) => {
     // httpServer.get('/call/:number1/:number2', (req, res) => {
     //     try {
     //         const number1 = req.params.number1;
@@ -26,8 +25,6 @@ module.exports = (httpServer, serverInstance) => {
             };
 
             dialer.configure(null);
-
-            const io = new Server(serverInstance);
 
             console.log('Dzwonie', number1, number2)
 

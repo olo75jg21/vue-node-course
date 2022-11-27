@@ -40,10 +40,6 @@ class ViewManager {
             this.status = status;
         })
     }
-
-    getStatus() {
-        return this.getStatus
-    }
 }
 
 export default new ViewManager()

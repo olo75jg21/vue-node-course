@@ -1,4 +1,5 @@
 const express = require('express');
+const { Server } = require('socket.io');
 
 const server = require('./utils/server.js');
 
@@ -11,4 +12,6 @@ const serverInstance = httpServer.listen(3000, () => {
     console.log('Example app listening on port 3000!')
 });
 
-server.applyRoutes(httpServer, serverInstance);
+const io = new Server(serverInstance);
+
+server.applyRoutes(httpServer, io);
