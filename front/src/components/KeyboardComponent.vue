@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-3 gap-4 mt-8 mb-8">
+    <div class="grid grid-cols-3 gap-4 mt-8 mb-4">
         <button v-for="key in keys" :key="key" :class="btnStyle" @click="press(key)">
             {{ key }}
         </button>

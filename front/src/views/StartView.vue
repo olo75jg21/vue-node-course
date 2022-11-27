@@ -5,9 +5,13 @@
 
         <KeyboardComponent @pressed="value = $event" :selfValue="value" v-model="number"></KeyboardComponent>
 
-        <div class="call-button" @click="call()">
-            Zadzwoń teraz
+        <div class="">
+            <div @click="call()"
+                class="flex items-center justify-center mx-auto w-14 h-14 border-2 rounded-full text-gray-300 border-gray-300 hover:border-lime-600 hover:text-lime-600 transition duration-150 ease-in-out cursor-pointer">
+                <font-awesome-icon icon="fa-solid fa-phone" class=" w-6 h-6" />
+            </div>
         </div>
+
     </div>
 </template>
 
