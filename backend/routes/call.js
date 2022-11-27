@@ -1,4 +1,6 @@
 const dialer = require('dialer').Dialer;
+const { numberValidation } = require('../middlewares/validation');
+const { yupNumberSchema } = require('../validation/numberValidationSchema');
 
 module.exports = (httpServer, io) => {
     // httpServer.get('/call/:number1/:number2', (req, res) => {
@@ -12,7 +14,7 @@ module.exports = (httpServer, io) => {
     //     }
     // });
 
-    httpServer.post('/call/', async (req, res) => {
+    httpServer.post('/call/', numberValidation(yupNumberSchema), async (req, res) => {
         try {
             const number1 = req.body.number;
             const number2 = '555555555' // tutaj dajemy swój numer
