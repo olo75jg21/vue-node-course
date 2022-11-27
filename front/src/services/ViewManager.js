@@ -13,6 +13,7 @@ class ViewManager {
                 router.push({ name: 'connected' });
                 break;
             case 'FAILED':
+                this.socket.disconnect();
                 router.push({ name: 'failed' });
                 break;
             case 'ANSWERED':
