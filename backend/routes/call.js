@@ -15,7 +15,7 @@ module.exports = (httpServer, io) => {
     httpServer.post('/call/', async (req, res) => {
         try {
             const number1 = req.body.number;
-            const number2 = '555555555' // tutaj dejemy swój numer
+            const number2 = '555555555' // tutaj dajemy swój numer
 
             // setup dialer
             const config = {
