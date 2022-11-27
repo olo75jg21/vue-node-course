@@ -18,7 +18,7 @@ export default {
             keys: [1, 2, 3, 4, 5, 6, 7, 8, 9],
             buttonTheme: 'btn-danger',
             btnStyle: `border-2 border-gray-300 rounded-full h-14 w-14 text-xl text-gray-300 hover:text-white
-                       hover:border-white hover:text-2xl transition duration-150 ease-in-out`
+                       hover:border-white hover:text-2xl transition duration-150 ease-in-out hover:scale-110`
         };
     },
     methods: {
