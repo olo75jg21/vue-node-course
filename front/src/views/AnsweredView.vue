@@ -1,9 +1,9 @@
 <template>
-    <div class="box">
-        <div class="text">
+    <div>
+        <div>
             Połączenie zakończone.
         </div>
-        <div class="call-button-bottom" @click="$router.push('/')">
+        <div @click="$router.push('/')">
             Spróbuj ponownie
         </div>
     </div>

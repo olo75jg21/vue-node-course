@@ -1,5 +1,5 @@
 <template>
-    <div class="text flex flex-col h-full">
+    <div class="flex flex-col h-full">
         <div class="mb-48 mt-4 text-xl">
             <p>Zaraz nastąpi połączenie.</p>
         </div>
