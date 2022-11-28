@@ -4,6 +4,7 @@
   - git clone https://github.com/olo75jg21/vue-node-dialer.git
 
 ## Setup frontend
+  - cd vue-node-dialer
   - cd front
   - npm install
  
