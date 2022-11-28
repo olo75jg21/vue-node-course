@@ -1,60 +1,47 @@
 const dialer = require('dialer').Dialer;
+
 const { numberValidation } = require('../middlewares/validation');
 const { yupNumberSchema } = require('../validation/numberValidationSchema');
+const appConfig = require('../config/config');
 
 module.exports = (httpServer, io) => {
-    // httpServer.get('/call/:number1/:number2', (req, res) => {
-    //     try {
-    //         const number1 = req.params.number1;
-    //         const number2 = req.params.number2;
-    //         dialer.call(number1, number2);
-    //         res.json({ success: true });
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    // });
-
     httpServer.post('/call/', numberValidation(yupNumberSchema), async (req, res) => {
         try {
             const number1 = req.body.number;
-            const number2 = '555555555' // tutaj dajemy swój numer
+            const number2 = appConfig.fake_phone_number // tutaj dajemy swój numer -> app.config.my_phone_number
 
             // setup dialer
             const config = {
-                url: 'https://uni-call.fcc-online.pl',
-                login: '',
-                password: ''
+                url: appConfig.dialer_url,
+                login: appConfig.dialer_login,
+                password: appConfig.dialer_password
             };
 
             dialer.configure(null);
 
-            console.log('Dzwonie', number1, number2)
-
             bridge = await dialer.call(number1, number2);
 
             let oldStatus = null
+            const possibleStatuses = ['ANSWERED', 'FAILED', 'BUSY', 'NO ANSWER'];
 
             let interval = setInterval(async () => {
                 let currentStatus = await bridge.getStatus();
-                console.log(currentStatus)
+
                 if (currentStatus !== oldStatus) {
                     oldStatus = currentStatus
                     io.emit('status', currentStatus)
                 }
-                if (
-                    currentStatus === "ANSWERED" ||
-                    currentStatus === "FAILED" ||
-                    currentStatus === "BUSY" ||
-                    currentStatus === "NO ANSWER"
-                ) {
+
+                if (possibleStatuses.includes(currentStatus)) {
                     console.log('stop')
-                    // io.disconnect()
                     clearInterval(interval)
                 }
-            }, 1000)
+            }, 1000);
+
             res.status(200).json({
                 id: '123', status: bridge.STATUSES.NEW
             });
+
         } catch (e) {
             console.log(e);
         }

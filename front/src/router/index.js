@@ -12,7 +12,6 @@ const routes = [
     path: '/',
     name: 'start',
     component: Start,
-    props: true
   },
   {
     path: '/answered',
@@ -51,7 +50,6 @@ const routes = [
     path: '/history',
     name: 'history',
     component: History,
-    props: true
   },
   {
     path: '/ringing',
