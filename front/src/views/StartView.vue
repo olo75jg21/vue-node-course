@@ -9,11 +9,19 @@
 
         <KeyboardComponent @pressed="value = $event" :selfValue="value" v-model="value"></KeyboardComponent>
 
-        <div class="">
+        <div class="grid grid-cols-3 gap-4">
+            <div @click="$router.push('/history')"
+                class="flex items-center justify-center mx-auto w-14 h-14 border-2 rounded-full text-gray-300 border-gray-300 hover:border-lime-600 hover:text-lime-600 transition duration-150 ease-in-out cursor-pointer hover:scale-110">
+                <font-awesome-icon icon="fa-solid fa-book" class=" w-6 h-6" />
+            </div>
+
             <div @click="call()"
                 class="flex items-center justify-center mx-auto w-14 h-14 border-2 rounded-full text-gray-300 border-gray-300 hover:border-lime-600 hover:text-lime-600 transition duration-150 ease-in-out cursor-pointer hover:scale-110">
+
                 <font-awesome-icon icon="fa-solid fa-phone" class=" w-6 h-6" />
             </div>
+
+            <div></div>
         </div>
 
     </div>
@@ -21,8 +29,10 @@
 
 <script>
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 import ViewManager from '../services/ViewManager';
 import KeyboardComponent from '@/components/KeyboardComponent.vue';
+
 
 export default {
     components: { KeyboardComponent },
@@ -40,6 +50,8 @@ export default {
 
                 if (!this.isValidPhoneNumber) return;
 
+                this.addToHistory();
+
                 const { data } = await axios.post('call', { number: this.value })
                 ViewManager.checkStatus()
                 this.$router.push({ name: 'ringing', params: { callsId: data.id } })
@@ -56,6 +68,23 @@ export default {
                 this.isValidPhoneNumber = false;
             }
         },
+
+        addToHistory() {
+            const newNumber = {
+                id: uuidv4(),
+                number: this.value
+            };
+
+            let localStorageNumbers = JSON.parse(localStorage.getItem('numbersHistory'));
+
+            if (!localStorageNumbers) {
+                localStorageNumbers = [];
+            }
+
+            localStorageNumbers.push(newNumber)
+
+            localStorage.setItem('numbersHistory', JSON.stringify(localStorageNumbers));
+        }
     },
 }
 </script>

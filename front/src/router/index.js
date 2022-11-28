@@ -3,6 +3,7 @@ import ViewManager from '@/services/ViewManager'
 import Answered from '../views/AnsweredView.vue';
 import Connected from '../views/ConnectedView.vue';
 import Failed from '../views/FailedView.vue';
+import History from '../views/HistoryView.vue';
 import Ringing from '../views/RingingView.vue';
 import Start from '../views/StartView.vue';
 
@@ -10,15 +11,15 @@ const routes = [
   {
     path: '/',
     name: 'start',
-    component: Start
+    component: Start,
+    props: true
   },
   {
-    path: '/ringing',
-    name: 'ringing',
-    component: Ringing,
-    props: true,
+    path: '/answered',
+    name: 'answered',
+    component: Answered,
     beforeEnter: (to, from, next) => {
-      if (ViewManager.status !== 'RINGING') {
+      if (ViewManager.status !== 'ANSWERED') {
         next('/');
       }
       next();
@@ -36,17 +37,6 @@ const routes = [
     }
   },
   {
-    path: '/answered',
-    name: 'answered',
-    component: Answered,
-    beforeEnter: (to, from, next) => {
-      if (ViewManager.status !== 'ANSWERED') {
-        next('/');
-      }
-      next();
-    }
-  },
-  {
     path: '/failed',
     name: 'failed',
     component: Failed,
@@ -56,7 +46,25 @@ const routes = [
       }
       next();
     }
-  }
+  },
+  {
+    path: '/history',
+    name: 'history',
+    component: History,
+    props: true
+  },
+  {
+    path: '/ringing',
+    name: 'ringing',
+    component: Ringing,
+    props: true,
+    beforeEnter: (to, from, next) => {
+      if (ViewManager.status !== 'RINGING') {
+        next('/');
+      }
+      next();
+    }
+  },
 ];
 
 const router = createRouter({
